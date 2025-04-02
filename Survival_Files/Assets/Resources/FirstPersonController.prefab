@@ -324,10 +324,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canSprint: 1
   canJump: 1
+  canCrouch: 1
   sprintKey: 304
   jumpKey: 32
+  crouchKey: 306
   walkSpeed: 3
   sprintSpeed: 6
+  crouchSpeed: 1.5
   deadZone: 0.25
   lookSpeedX: 2
   lookSpeedY: 2
@@ -335,6 +338,11 @@ MonoBehaviour:
   lowerLookLimit: 80
   jumpForce: 8
   gravity: 30
+  crouchHeight: 0.5
+  standHeight: 2
+  timeToCrouch: 0.25
+  crouchCenter: {x: 0, y: 0.5, z: 0}
+  standCenter: {x: 0, y: 0, z: 0}
 --- !u!114 &6961659493416472508
 MonoBehaviour:
   m_ObjectHideFlags: 0
