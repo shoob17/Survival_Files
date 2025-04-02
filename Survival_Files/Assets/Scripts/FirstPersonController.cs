@@ -3,9 +3,17 @@ using UnityEngine;
 public class FirstPersonController : MonoBehaviour
 {
     public bool canMove { get; private set; } = true;
+    private bool isSprinting => canSprint && Input.GetKey(sprintKey);
+
+    [Header("Functional Options")]
+    [SerializeField] private bool canSprint = true;
+
+    [Header("Controls")]
+    [SerializeField] private KeyCode sprintKey = KeyCode.LeftShift;
 
     [Header("Movement Parameters")]
     [SerializeField] private float walkSpeed = 3.0f;
+    [SerializeField] private float sprintSpeed = 6.0f;
     [SerializeField] private float gravity = 30.0f;
 
     [Header("Look Parameters")]
@@ -19,6 +27,17 @@ public class FirstPersonController : MonoBehaviour
 
     private Vector3 moveDirection;
     private Vector2 currentInput;
+
+    private float currentSpeed
+    {
+        get
+        {
+            // Attempt to have one currentSpeed value 
+            if (isSprinting) return sprintSpeed;
+            // if (isCrouching) return crouchSpeed;
+            return walkSpeed;
+        }
+    }
 
     private float rotationX = 0;
 
@@ -43,10 +62,17 @@ public class FirstPersonController : MonoBehaviour
 
     private void HandleMovementInput()
     {
-        currentInput = new Vector2(walkSpeed * Input.GetAxis("Vertical"), walkSpeed * Input.GetAxis("Horizontal"));
-
         float moveDirectionY = moveDirection.y;
-        moveDirection = (transform.TransformDirection(Vector3.forward) * currentInput.x) + (transform.TransformDirection(Vector3.right) * currentInput.y);
+
+        float verticalInput = Input.GetAxis("Vertical");
+        float horizontalInput = Input.GetAxis("Horizontal");
+
+        Vector3 direction = (transform.TransformDirection(Vector3.forward) * verticalInput) +
+                            (transform.TransformDirection(Vector3.right) * horizontalInput);
+
+        direction = direction.normalized;
+
+        moveDirection = direction * currentSpeed;
         moveDirection.y = moveDirectionY;
     }
 
