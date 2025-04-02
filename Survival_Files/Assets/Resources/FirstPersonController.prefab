@@ -328,6 +328,7 @@ MonoBehaviour:
   jumpKey: 32
   walkSpeed: 3
   sprintSpeed: 6
+  deadZone: 0.25
   lookSpeedX: 2
   lookSpeedY: 2
   upperLookLimit: 80

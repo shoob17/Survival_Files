@@ -17,6 +17,9 @@ public class FirstPersonController : MonoBehaviour
     [Header("Movement Parameters")]
     [SerializeField] private float walkSpeed = 3.0f;
     [SerializeField] private float sprintSpeed = 6.0f;
+    [Space]
+    [SerializeField] private float deadZone = 0.25f; // Adjust for the snappiness after player stops moving
+
 
     [Header("Look Parameters")]
     [SerializeField, Range(1, 10)] private float lookSpeedX = 2.0f;
@@ -75,6 +78,9 @@ public class FirstPersonController : MonoBehaviour
 
         float verticalInput = Input.GetAxis("Vertical");
         float horizontalInput = Input.GetAxis("Horizontal");
+
+        if (Mathf.Abs(verticalInput) < deadZone) verticalInput = 0f;
+        if (Mathf.Abs(horizontalInput) < deadZone) horizontalInput = 0f;
 
         Vector3 direction = (transform.TransformDirection(Vector3.forward) * verticalInput) +
                             (transform.TransformDirection(Vector3.right) * horizontalInput);
