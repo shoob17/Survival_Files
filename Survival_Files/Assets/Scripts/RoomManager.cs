@@ -4,6 +4,10 @@ using Photon.Pun;
 public class RoomManager : MonoBehaviourPunCallbacks
 {
     public string roomCode = "Map1";
+    public GameObject player;
+    public Transform spawnPoint;
+    [Space]
+    public GameObject roomCamera;
 
     void Start()
     {
@@ -35,6 +39,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Joined room. Spawning player");
 
+        PhotonNetwork.Instantiate(player.name, spawnPoint.position, Quaternion.identity);
+        roomCamera.SetActive(false);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
